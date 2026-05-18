@@ -1,3 +1,41 @@
+# Mijn Taken
+
+Een eenvoudige todo-app gebouwd met Next.js en een Neon Postgres-database.
+
+## Functies
+
+- Taken aanmaken met titel, deadline en prioriteit (hoog / midden / laag)
+- Taken bewerken en verwijderen
+- Taken als voltooid markeren
+- Filteren op status: alles / actief / voltooid
+- Sorteren op deadline, prioriteit of aanmaakdatum
+- Header toont live tellingen: actief · voltooid · **vandaag aangemaakt**
+
+## Tech stack
+
+- **Next.js** (App Router) met TypeScript
+- **Neon** serverless Postgres via `@neondatabase/serverless`
+- **Tailwind CSS** voor styling
+
+## Database
+
+De app verwacht een `todos`-tabel:
+
+```sql
+CREATE TABLE todos (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  deadline TEXT NOT NULL,
+  priority TEXT NOT NULL,
+  completed BOOLEAN NOT NULL DEFAULT false,
+  created_at TEXT NOT NULL
+);
+```
+
+Stel `DATABASE_URL` in als omgevingsvariabele (bijv. in `.env.local`).
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
