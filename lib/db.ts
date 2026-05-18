@@ -1,10 +1,8 @@
-import { neon } from '@neondatabase/serverless'
+import { neon, type NeonQueryFunction } from '@neondatabase/serverless'
 
-let _sql: ReturnType<typeof neon> | undefined
+let _sql: NeonQueryFunction<false, false> | undefined
 
-function sql(...args: Parameters<ReturnType<typeof neon>>) {
+export function getSql(): NeonQueryFunction<false, false> {
   if (!_sql) _sql = neon(process.env.DATABASE_URL!)
-  return _sql(...args)
+  return _sql
 }
-
-export default sql as ReturnType<typeof neon>

@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import sql from '@/lib/db'
+import { getSql } from '@/lib/db'
 import { Todo } from '@/lib/types'
 
 export async function GET() {
-  const rows = await sql`SELECT * FROM todos ORDER BY created_at DESC`
+  const rows = await getSql()`SELECT * FROM todos ORDER BY created_at DESC`
   const todos: Todo[] = rows.map((r) => ({
     id: r.id as string,
     title: r.title as string,
@@ -17,7 +17,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const todo: Todo = await request.json()
-  await sql`
+  await getSql()`
     INSERT INTO todos (id, title, deadline, priority, completed, created_at)
     VALUES (${todo.id}, ${todo.title}, ${todo.deadline}, ${todo.priority}, ${todo.completed}, ${todo.createdAt})
   `

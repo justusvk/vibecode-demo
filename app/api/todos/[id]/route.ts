@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import sql from '@/lib/db'
+import { getSql } from '@/lib/db'
 
 export async function PATCH(
   request: Request,
@@ -9,7 +9,7 @@ export async function PATCH(
   const body: Partial<{ title: string; deadline: string; priority: string; completed: boolean }> =
     await request.json()
 
-  await sql`
+  await getSql()`
     UPDATE todos SET
       title     = COALESCE(${body.title     ?? null}, title),
       deadline  = COALESCE(${body.deadline  ?? null}, deadline),
@@ -25,6 +25,6 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params
-  await sql`DELETE FROM todos WHERE id = ${id}`
+  await getSql()`DELETE FROM todos WHERE id = ${id}`
   return NextResponse.json({ ok: true })
 }
